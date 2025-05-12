@@ -1,0 +1,15 @@
+.button {
+  line-height: 1;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;/* KEEP THIS FILE AS IS  (Based on your original) */
+ .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(to right, #8e2de2
