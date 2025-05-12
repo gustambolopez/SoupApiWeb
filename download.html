@@ -15,6 +15,21 @@
  <body>
   <div class="page-wrapper">
    <div class="container">
+    <div id="project-header">
+     <div class="project-icon">
+      </div>
+     <div class="project-info">
+      <h1 class="project-title">Soup API</h1>
+      <p class="project-description">Visuals for the best PvP experience and playing with friends. Have fun :D Визуальны для лучших впечатлений от ПвП и игры с друзьями. Веселитесь :D</p>
+      <div class="project-stats">
+       <span class="downloads-count">
+        <i class="fas fa-download"></i> 71.7k</span>
+       <span class="likes-count">
+        <i class="fas fa-heart"></i> 36</span>
+      </div>
+     </div>
+    </div>
+
     <h1>Download Soup API Versions</h1>
     <ul id="version-menu">
      </ul>
@@ -30,7 +45,7 @@
      </div>
      <p><strong>Platforms</strong></p>
      <div class="platform-tags">
-      <span class="platform-tag"><i class="fas fa-cube"></i> Fabric</span>
+      <span class="platform-tag static-platform-tag"><i class="fas fa-cube"></i> Fabric</span>
      </div>
      <p><strong>Supported environments</strong></p>
      <div class="environment-tags">
@@ -81,6 +96,39 @@
     "f4Urh8e0"
    ];
    const versionMenu = document.getElementById('version-menu');
+   const projectHeader = document.getElementById('project-header');
+
+   // Replace with the actual project ID for "Soup API (PvP visuals)"
+   const projectId = "P7dR8mSH"; // Example: Using REI's ID for now, you'll need the correct one
+
+   async function fetchProjectInfo(projectId) {
+    try {
+     const response = await fetch(`https://api.modrinth.com/v2/project/${projectId}`);
+     if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+     }
+     return await response.json();
+    } catch (error) {
+     console.error(`Error fetching project info:`, error);
+     return null;
+    }
+   }
+
+   async function displayProjectInfo(project) {
+    if (project && projectHeader) {
+     const iconContainer = projectHeader.querySelector('.project-icon');
+     const titleElement = projectHeader.querySelector('.project-title');
+     const descriptionElement = projectHeader.querySelector('.project-description');
+     const downloadsElement = projectHeader.querySelector('.downloads-count');
+     const likesElement = projectHeader.querySelector('.likes-count');
+
+     iconContainer.innerHTML = ''; // Ensure no image or gray box is displayed
+
+     titleElement.textContent = "Soup API"; // Set the static project title
+     descriptionElement.textContent = "Visuals for the best PvP experience and playing with friends. Have fun :D Визуальны для лучших впечатлений от ПвП и игры с друзьями. Веселитесь :D"; // Set the static description
+     // The download and like counts are already set directly in the HTML
+    }
+   }
 
    async function fetchVersionInfo(versionId) {
     try {
@@ -100,13 +148,14 @@
     versionsData.forEach(version => {
      if (version && version.files && version.files.length > 0) {
       const li = document.createElement('li');
+      li.classList.add('version-item'); // Add a class for easier styling
 
       // Name
       const nameCol = document.createElement('div');
       nameCol.classList.add('version-name-col');
       const versionIcon = document.createElement('div');
       versionIcon.classList.add('version-icon');
-      versionIcon.textContent = 'R'; // Placeholder for the icon
+      versionIcon.textContent = 'R';
       const versionName = document.createElement('div');
       versionName.classList.add('version-name');
       versionName.textContent = version.version_number;
@@ -131,7 +180,7 @@
        const platformBadge = document.createElement('span');
        platformBadge.classList.add('platform-badge');
        platformBadge.textContent = loader;
-       platformBadge.dataset.platform = loader; // Add data attribute for CSS
+       platformBadge.dataset.platform = loader.toLowerCase(); // Use lowercase for data attribute
        platformsCol.appendChild(platformBadge);
       });
       li.appendChild(platformsCol);
@@ -183,6 +232,7 @@
       versionMenu.appendChild(li);
      } else if (version) {
       const li = document.createElement('li');
+      li.classList.add('version-item'); // Add a class for easier styling
       li.textContent = `${version.version_number} (No Download Available)`;
       li.style.color = '#888';
       versionMenu.appendChild(li);
@@ -191,6 +241,9 @@
    }
 
    async function initialize() {
+    const projectInfo = await fetchProjectInfo(projectId);
+    displayProjectInfo(projectInfo);
+
     const versionInfoPromises = versionIds.map(id => fetchVersionInfo(id));
     const versionsData = await Promise.all(versionInfoPromises);
     populateVersionMenu(versionsData.filter(data => data !== null)); // Filter out failed fetches
