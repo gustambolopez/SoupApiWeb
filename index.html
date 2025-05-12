@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="css/github_style.css">
   <link rel="stylesheet" href="css/falling_dots.css">
   <style>
-   body,
-   html {
+    body,
+    html {
     height: 100%;
     margin: 0;
     overflow: hidden;
@@ -41,38 +41,6 @@
     display: flex;
     align-items: center;
     gap: 15px;
-   }
-
-   /* Download Button Styling */
-   .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    font-size: 1em;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-   }
-
-   .button:hover {
-    background: linear-gradient(to right, #7a25c5, #3d00b8);
-   }
-
-   .button__icon {
-    margin-right: 8px;
-    fill: white;
-    stroke: white;
-    height: 1.4em;
-    width: 1.4em;
-   }
-
-   .button__text {
-    white-space: nowrap;
    }
 
    /* GitHub Button Styling */
@@ -130,16 +98,11 @@
   <div class="content-wrapper">
    <div class="text-container">Soup-API</div>
    <div class="button-container">
-    <a href="download.html" class="button">
-     <svg stroke-linejoin="round" stroke-linecap="round" fill="none" stroke="currentColor" stroke-width="1.5"
-      viewBox="0 0 24 24" class="button__icon" xmlns="http://www.w3.org/2000/svg">
-      <path fill="none" d="M0 0h24v24H0z" stroke="none"></path>
-      <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
-      <path d="M7 11l5 5l5 -5"></path>
-      <path d="M12 4l0 12"></path>
-     </svg>
-     <span class="button__text">Download</span>
-    </a>
+    <button class="button">
+     <div class="blob1"></div>
+     <div class="blob2"></div>
+     <div class="inner">Download</div>
+    </button>
 
     <a href="https://github.com/Pa-dej/SoupAPI-recode" target="_blank" rel="noopener noreferrer">
      <button class="Btn">
@@ -164,7 +127,6 @@
       </span>
      </button>
     </a>
-
    </div>
   </div>
 
