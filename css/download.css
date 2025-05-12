@@ -21,7 +21,7 @@
  }
 
  .container {
-  background-color: #212124;
+  background-color: #282828;
   color: #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
@@ -30,7 +30,7 @@
  }
 
  .sidebar {
-  background-color: #212124;
+  background-color: #29292c;
   color: #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
@@ -61,18 +61,24 @@
 
  .version-tag {
   background-color: rgba(156, 163, 175, 0.15); /* Light background */
-  color: #9ca3af; /* Darker text */
+  color: #c8d0db; /* Darker text */
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 0.85em;
  }
 
- .platform-badge {
-  background-color: #333; /* Dark background */
-  color: #ddd; /* Light text */
+ .platform-tag {
+  background-color: rgba(156, 163, 175, 0.15); /* Default platform tag style */
+  color: #9ca3af;
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 0.85em;
+ }
+
+ /* Specific styling for the static Fabric tag in the sidebar */
+ .static-platform-tag {
+  background-color: #333; /* Dark background */
+  color: #ddd;
  }
 
  .platform-tag i {
@@ -81,7 +87,7 @@
 
  .environment-tag {
   background-color: #333; /* Dark background */
-  color: #ddd; /* Light text */
+  color: #ddd;
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 0.85em;
@@ -146,10 +152,62 @@
   color: #64b5f6;
  }
 
- /* Existing CSS for the container and version menu */
+ /* Project Header Styling */
+ #project-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+ }
+
+ .project-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-right: 15px;
+  background-color: #424242; /* Gray background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  color: #8bc34ac1; /* Green color for the 'R' */
+  font-weight: bold;
+ }
+
+ .project-info h1 {
+  font-size: 1.75em;
+  margin-bottom: 5px;
+ }
+
+ .project-info p {
+  color: #ffffff;
+  font-size: 0.9em;
+  line-height: 1.4;
+ }
+
+ .project-stats {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+ }
+
+ .downloads-count,
+ .likes-count {
+  display: flex;
+  align-items: center;
+  color: #ccc;
+  font-size: 0.9em;
+ }
+
+ .downloads-count i,
+ .likes-count i {
+  margin-right: 5px;
+ }
+
+ /* Version Menu Styling */
  .container h1 {
   color: #fff;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   font-size: 1.75em;
   font-weight: 700;
   text-align: left;
@@ -160,79 +218,112 @@
   padding: 0;
  }
 
- #version-menu li {
+ .version-item {
   padding: 12px 16px;
   border-bottom: 1px solid #303033;
   display: grid;
-  grid-template-columns: auto 1fr auto 60px auto 36px; /* Adjusted grid to give more space to downloads */
+  grid-template-columns: 1fr auto auto auto auto 36px; /* Re-establish grid */
   align-items: center;
-  gap: 12px;
-  background-color: #2a2a2d; /* Dark background for list items */
-  border-bottom: 1px solid #39393c; /* Slightly lighter border */
-  border-radius: 8px; /* Add rounded corners to list items */
-  margin-bottom: 8px; /* Add spacing between list items */
+  gap: 10px;
  }
 
- #version-menu li:last-child {
+ .version-item:last-child {
   border-bottom: none;
-  margin-bottom: 0; /* Remove margin for the last item */
  }
 
- .version-name-col,
- .game-version,
- .platforms,
+ .version-name-col {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+ }
+
+ .version-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 11px;
+  background-color: #2df1447e; /* Green background for 'R' */
+  color: #04ff43;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+ }
+
+ .version-name {
+  font-weight: 500;
+  font-size: 0.9em;
+  color: #eee;
+  line-height: 1.2;
+ }
+
+ .version-sub-name {
+  font-size: 0.75em;
+  color: #999;
+ }
+
+ .game-version {
+  color: #ccc;
+  font-size: 0.8em;
+ }
+
+ .platforms {
+  display: flex;
+  gap: 5px;
+ }
+
+ .platform-badge {
+  background-color: #424242;
+  color: #eee;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 0.7em;
+}
+
+.platform-badge[data-platform="fabric"] {
+    background-color: #8585852c; /* Example Fabric color */
+}
+
+.platform-badge[data-platform="forge"] {
+    background-color: #ff9800; /* Example Forge color */
+}
+
+.platform-badge[data-platform="quilt"] {
+    background-color: #00bcd4; /* Example Quilt color */
+}
+
  .published {
-  color: #eee; /* Light text color for most elements */
+  color: #999;
+  font-size: 0.8em;
+  text-align: right;
  }
 
  .downloads {
-  color: #eee;
-  text-align: right; /* Align downloads to the right within its column */
+  color: #bbb;
+  font-size: 0.8em;
+  text-align: right;
  }
 
  .icons {
   display: flex;
-  gap: 8px;
-  justify-content: flex-end; /* Align download button to the right */
-  margin-left: 16px; /* Add some left margin to the icons container */
+  justify-content: flex-end;
  }
 
  .download-button {
-  background: none; /* Remove default background */
+  background: none;
   border: none;
-  padding: 0; /* Adjust padding for the icon */
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 1em;
+  color: #64b5f6;
   cursor: pointer;
-  transition: opacity 0.3s ease;
-  color: #64b5f6; /* Light blue color for the arrow */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px; /* Set a fixed width for the button */
-  height: 24px; /* Set a fixed height for the button */
- }
-
- .download-button:hover {
-  opacity: 0.8; /* Slightly fade on hover */
+  padding: 0;
+  font-size: 1em;
  }
 
  .download-button svg {
-  width: 20px; /* Adjust size of the SVG */
-  height: 20px;
-  fill: currentColor; /* Use the button's text color */
+  width: 24px;
+  height: 24px;
+  display: block;
  }
 
- .version-icon {
-  width: 24px; /* Adjust size as needed */
-  height: 24px; /* Adjust size as needed */
-  border-radius: 50%;
-  background-color: #e0f7fa; /* Light green background */
-  color: #00897b; /* Darker green text */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 0.8em; /* Adjust font size as needed */
+ .version-item:last-child {
+  border-bottom: none;
  }
