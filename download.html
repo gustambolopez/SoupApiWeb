@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Soup API Versions</title>
+  <link rel="stylesheet" href="css/download.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+ </head>
+
+ <body>
+  <div class="page-wrapper">
+   <div class="container">
+    <h1>Download Soup API Versions</h1>
+    <ul id="version-menu">
+     </ul>
+   </div>
+   <div class="sidebar">
+    <div class="compatibility-info">
+     <h2>Compatibility</h2>
+     <p><strong>Minecraft: Java Edition</strong></p>
+     <div class="version-tags">
+      <span class="version-tag">1.21-1.21.2</span>
+      <span class="version-tag">1.20.4-1.20.6</span>
+      <span class="version-tag">1.20.1</span>
+     </div>
+     <p><strong>Platforms</strong></p>
+     <div class="platform-tags">
+      <span class="platform-tag"><i class="fas fa-cube"></i> Fabric</span>
+     </div>
+     <p><strong>Supported environments</strong></p>
+     <div class="environment-tags">
+      <span class="environment-tag"><i class="fas fa-desktop"></i> Client-side</span>
+     </div>
+    </div>
+
+    <div class="testers-info">
+     <h2>Testers</h2>
+     <p class="tester">IBrrPatapim</p>
+     <p class="tester">Nodmavorga</p>
+     <p class="tester">Winvi</p>
+     <p class="tester">IcyCrow</p>
+    </div>
+
+    <div class="creators-info">
+     <h2>Creators</h2>
+     <div class="creator">
+      <div class="creator-details">
+       <strong>Padej_ <i class="fas fa-crown"></i></strong>
+       <span class="creator-role">Owner</span>
+      </div>
+     </div>
+    </div>
+
+    <div class="details-info">
+     <h2>Details</h2>
+     <ul>
+      <li><i class="fas fa-file-alt"></i> Licensed <span class="license">MIT</span></li>
+      <li><i class="fas fa-calendar-alt"></i> Published 7 months ago</li>
+      <li><i class="fas fa-history"></i> Updated last week</li>
+     </ul>
+    </div>
+   </div>
+  </div>
+
+  <script>
+   const versionIds = [
+    "LROCXGBZ",
+    "yCh7wpER",
+    "wdZOqG1J",
+    "zgCteGfl",
+    "9UkS8zZD",
+    "UHcAPEUL",
+    "OV07kMvo",
+    "K35sCj8F",
+    "iSj7tnro",
+    "f4Urh8e0"
+   ];
+   const versionMenu = document.getElementById('version-menu');
+
+   async function fetchVersionInfo(versionId) {
+    try {
+     const response = await fetch(`https://api.modrinth.com/v2/version/${versionId}`);
+     if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+     }
+     return await response.json();
+    } catch (error) {
+     console.error(`Error fetching info for version ${versionId}:`, error);
+     return null;
+    }
+   }
+
+   function populateVersionMenu(versionsData) {
+    versionMenu.innerHTML = ''; // Clear existing content
+    versionsData.forEach(version => {
+     if (version && version.files && version.files.length > 0) {
+      const li = document.createElement('li');
+
+      // Name
+      const nameCol = document.createElement('div');
+      nameCol.classList.add('version-name-col');
+      const versionIcon = document.createElement('div');
+      versionIcon.classList.add('version-icon');
+      versionIcon.textContent = 'R'; // Placeholder for the icon
+      const versionName = document.createElement('div');
+      versionName.classList.add('version-name');
+      versionName.textContent = version.version_number;
+      const versionSubName = document.createElement('div');
+      versionSubName.classList.add('version-sub-name');
+      versionSubName.textContent = `Soup API ${version.version_number}`;
+      nameCol.appendChild(versionIcon);
+      nameCol.appendChild(versionName);
+      nameCol.appendChild(versionSubName);
+      li.appendChild(nameCol);
+
+      // Game Version
+      const gameVersionCol = document.createElement('div');
+      gameVersionCol.classList.add('game-version');
+      gameVersionCol.textContent = version.game_versions.join(', ');
+      li.appendChild(gameVersionCol);
+
+      // Platforms
+      const platformsCol = document.createElement('div');
+      platformsCol.classList.add('platforms');
+      version.loaders.forEach(loader => {
+       const platformBadge = document.createElement('span');
+       platformBadge.classList.add('platform-badge');
+       platformBadge.textContent = loader;
+       platformBadge.dataset.platform = loader; // Add data attribute for CSS
+       platformsCol.appendChild(platformBadge);
+      });
+      li.appendChild(platformsCol);
+
+      // Published
+      const publishedCol = document.createElement('div');
+      publishedCol.classList.add('published');
+      const publishedDate = new Date(version.date_published);
+      const now = new Date();
+      const diffInMonths = (now.getFullYear() - publishedDate.getFullYear()) * 12 + (now.getMonth() - publishedDate.getMonth());
+      publishedCol.textContent = `${diffInMonths} months ago`;
+      li.appendChild(publishedCol);
+
+      // Downloads
+      const downloadsCol = document.createElement('div');
+      downloadsCol.classList.add('downloads');
+      downloadsCol.textContent = version.downloads ? (version.downloads > 999 ? (version.downloads / 1000).toFixed(1) + 'k' : version.downloads) : 'N/A';
+      li.appendChild(downloadsCol);
+
+      // Icons
+      const iconsCol = document.createElement('div');
+      iconsCol.classList.add('icons');
+      const downloadLink = document.createElement('a');
+      const downloadFile = version.files.find(file => file.primary) || version.files[0];
+      const downloadUrl = downloadFile?.url;
+
+      console.log(`Version: ${version.version_number}, Download File:`, downloadFile); // Log the entire file object
+      console.log(`Version: ${version.version_number}, Download URL: ${downloadUrl}`); // Log the URL specifically
+
+      if (downloadUrl) {
+       downloadLink.href = downloadUrl;
+      } else {
+       downloadLink.href = '#';
+       downloadLink.style.pointerEvents = 'none';
+       downloadLink.style.color = '#666';
+       console.warn(`No download URL found for ${version.version_number}`);
+      }
+      downloadLink.classList.add('download-button');
+      downloadLink.innerHTML = `
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" style="width: 1em; height: 1em; fill: currentColor;">
+  <path d="M17.5,22.131a1.249,1.249,0,0,1-1.25-1.25V2.187a1.25,1.25,0,0,1,2.5,0V20.881A1.25,1.25,0,0,1,17.5,22.131Z"></path>
+  <path d="M17.5,22.693a3.189,3.189,0,0,1-2.262-.936L8.487,15.006a1.249,1.249,0,0,1,1.767-1.767l6.751,6.751a.7.7,0,0,0,.99,0l6.751-6.751a1.25,1.25,0,0,1,1.768,1.767l-6.752,6.751A3.191,3.191,0,0,1,17.5,22.693Z"></path>
+  <path d="M31.436,34.063H3.564A3.318,3.318,0,0,1,.25,30.749V22.011a1.25,1.25,0,0,1,2.5,0v8.738a.815.815,0,0,0,.814.814H31.436a.815.815,0,0,0,.814-.814V22.011a1.25,1.25,0,1,1,2.5,0v8.738A3.318,3.318,0,0,1,31.436,34.063Z"></path>
+ </svg>
+`;
+      iconsCol.appendChild(downloadLink);
+      li.appendChild(iconsCol);
+
+      versionMenu.appendChild(li);
+     } else if (version) {
+      const li = document.createElement('li');
+      li.textContent = `${version.version_number} (No Download Available)`;
+      li.style.color = '#888';
+      versionMenu.appendChild(li);
+     }
+    });
+   }
+
+   async function initialize() {
+    const versionInfoPromises = versionIds.map(id => fetchVersionInfo(id));
+    const versionsData = await Promise.all(versionInfoPromises);
+    populateVersionMenu(versionsData.filter(data => data !== null)); // Filter out failed fetches
+   }
+
+   initialize();
+  </script>
+ </body>
+
+ </html>
