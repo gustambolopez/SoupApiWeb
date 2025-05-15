@@ -10,9 +10,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+   body {
+    margin: 0; 
+    overflow: hidden; 
+   }
+
+   canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+   }
+  </style>
  </head>
 
  <body>
+  <canvas id="asteroidCanvas"></canvas>
   <div class="page-wrapper">
    <div class="container">
     <div id="project-header">
@@ -82,6 +98,7 @@
    </div>
   </div>
 
+  <script src="js/asteroids.js"></script>
   <script>
    const versionIds = [
     "LROCXGBZ",
@@ -93,13 +110,13 @@
     "OV07kMvo",
     "K35sCj8F",
     "iSj7tnro",
+    "22Bu9GyO",
     "f4Urh8e0"
    ];
    const versionMenu = document.getElementById('version-menu');
    const projectHeader = document.getElementById('project-header');
 
-   // Replace with the actual project ID for "Soup API (PvP visuals)"
-   const projectId = "P7dR8mSH"; // Example: Using REI's ID for now, you'll need the correct one
+   const projectId = "P7dR8mSH"; // Ensure this is the correct project ID for Soup API
 
    async function fetchProjectInfo(projectId) {
     try {
@@ -122,11 +139,10 @@
      const downloadsElement = projectHeader.querySelector('.downloads-count');
      const likesElement = projectHeader.querySelector('.likes-count');
 
-     iconContainer.innerHTML = ''; // Ensure no image or gray box is displayed
+     iconContainer.innerHTML = '';
 
-     titleElement.textContent = "Soup API"; // Set the static project title
-     descriptionElement.textContent = "Visuals for the best PvP experience and playing with friends. Have fun :D Визуальны для лучших впечатлений от ПвП и игры с друзьями. Веселитесь :D"; // Set the static description
-     // The download and like counts are already set directly in the HTML
+     titleElement.textContent = "Soup API";
+     descriptionElement.textContent = "Visuals for the best PvP experience and playing with friends. Have fun :D Визуальны для лучших впечатлений от ПвП и игры с друзьями. Веселитесь :D";
     }
    }
 
@@ -144,13 +160,12 @@
    }
 
    function populateVersionMenu(versionsData) {
-    versionMenu.innerHTML = ''; // Clear existing content
+    versionMenu.innerHTML = '';
     versionsData.forEach(version => {
      if (version && version.files && version.files.length > 0) {
       const li = document.createElement('li');
-      li.classList.add('version-item'); // Add a class for easier styling
+      li.classList.add('version-item');
 
-      // Name
       const nameCol = document.createElement('div');
       nameCol.classList.add('version-name-col');
       const versionIcon = document.createElement('div');
@@ -167,25 +182,22 @@
       nameCol.appendChild(versionSubName);
       li.appendChild(nameCol);
 
-      // Game Version
       const gameVersionCol = document.createElement('div');
       gameVersionCol.classList.add('game-version');
       gameVersionCol.textContent = version.game_versions.join(', ');
       li.appendChild(gameVersionCol);
 
-      // Platforms
       const platformsCol = document.createElement('div');
       platformsCol.classList.add('platforms');
       version.loaders.forEach(loader => {
        const platformBadge = document.createElement('span');
        platformBadge.classList.add('platform-badge');
        platformBadge.textContent = loader;
-       platformBadge.dataset.platform = loader.toLowerCase(); // Use lowercase for data attribute
+       platformBadge.dataset.platform = loader.toLowerCase();
        platformsCol.appendChild(platformBadge);
       });
       li.appendChild(platformsCol);
 
-      // Published
       const publishedCol = document.createElement('div');
       publishedCol.classList.add('published');
       const publishedDate = new Date(version.date_published);
@@ -194,21 +206,16 @@
       publishedCol.textContent = `${diffInMonths} months ago`;
       li.appendChild(publishedCol);
 
-      // Downloads
       const downloadsCol = document.createElement('div');
       downloadsCol.classList.add('downloads');
       downloadsCol.textContent = version.downloads ? (version.downloads > 999 ? (version.downloads / 1000).toFixed(1) + 'k' : version.downloads) : 'N/A';
       li.appendChild(downloadsCol);
 
-      // Icons
       const iconsCol = document.createElement('div');
       iconsCol.classList.add('icons');
       const downloadLink = document.createElement('a');
       const downloadFile = version.files.find(file => file.primary) || version.files[0];
       const downloadUrl = downloadFile?.url;
-
-      console.log(`Version: ${version.version_number}, Download File:`, downloadFile); // Log the entire file object
-      console.log(`Version: ${version.version_number}, Download URL: ${downloadUrl}`); // Log the URL specifically
 
       if (downloadUrl) {
        downloadLink.href = downloadUrl;
@@ -232,7 +239,7 @@
       versionMenu.appendChild(li);
      } else if (version) {
       const li = document.createElement('li');
-      li.classList.add('version-item'); // Add a class for easier styling
+      li.classList.add('version-item');
       li.textContent = `${version.version_number} (No Download Available)`;
       li.style.color = '#888';
       versionMenu.appendChild(li);
@@ -246,7 +253,7 @@
 
     const versionInfoPromises = versionIds.map(id => fetchVersionInfo(id));
     const versionsData = await Promise.all(versionInfoPromises);
-    populateVersionMenu(versionsData.filter(data => data !== null)); // Filter out failed fetches
+    populateVersionMenu(versionsData.filter(data => data !== null));
    }
 
    initialize();

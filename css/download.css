@@ -1,5 +1,4 @@
-/* Existing CSS */
- body,
+body,
  html {
   height: 100%;
   margin: 0;
@@ -10,6 +9,7 @@
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
+  position: relative;
  }
 
  .page-wrapper {
@@ -18,25 +18,31 @@
   max-width: 1200px;
   width: 95%;
   gap: 20px;
+  position: relative; /* Added */
+  z-index: 10; /* Added */
  }
 
  .container {
-  background-color: #282828;
+  background-color: #212124;
   color: #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
   padding: 24px;
   flex: 2;
+  position: relative; /* Added */
+  z-index: 11; /* Added */
  }
 
  .sidebar {
-  background-color: #29292c;
+  background-color: #212124;
   color: #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
   padding: 24px;
   flex: 1;
   width: 300px;
+  position: relative; /* Added */
+  z-index: 11; /* Added */
  }
 
  .sidebar h2 {
@@ -61,15 +67,15 @@
 
  .version-tag {
   background-color: rgba(156, 163, 175, 0.15); /* Light background */
-  color: #c8d0db; /* Darker text */
+  color: #9ca3af; /* Darker text */
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 0.85em;
  }
 
  .platform-tag {
-  background-color: rgba(156, 163, 175, 0.15); /* Default platform tag style */
-  color: #9ca3af;
+  background-color: rgba(141, 163, 199, 0.15); /* Default platform tag style */
+  color: #9ca3afc2;
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 0.85em;
@@ -77,7 +83,7 @@
 
  /* Specific styling for the static Fabric tag in the sidebar */
  .static-platform-tag {
-  background-color: #333; /* Dark background */
+  background-color: #333333c1; /* Dark background */
   color: #ddd;
  }
 
@@ -157,6 +163,8 @@
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  position: relative;
+  z-index: 100; /* Very high z-index */
  }
 
  .project-icon {
@@ -170,7 +178,7 @@
   justify-content: center;
   align-items: center;
   font-size: 1.5em;
-  color: #8bc34ac1; /* Green color for the 'R' */
+  color: #8bc34a; /* Green color for the 'R' */
   font-weight: bold;
  }
 
@@ -180,7 +188,7 @@
  }
 
  .project-info p {
-  color: #ffffff;
+  color: #999;
   font-size: 0.9em;
   line-height: 1.4;
  }
@@ -225,6 +233,8 @@
   grid-template-columns: 1fr auto auto auto auto 36px; /* Re-establish grid */
   align-items: center;
   gap: 10px;
+  position: relative; /* Added */
+  z-index: 101; /* Very high z-index */
  }
 
  .version-item:last-child {
@@ -240,9 +250,9 @@
  .version-icon {
   width: 24px;
   height: 24px;
-  border-radius: 11px;
-  background-color: #2df1447e; /* Green background for 'R' */
-  color: #04ff43;
+  border-radius: 4px;
+  background-color: #3ae6408f; /* Green background for 'R' */
+  color: #34b609e1;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -281,7 +291,7 @@
 }
 
 .platform-badge[data-platform="fabric"] {
-    background-color: #8585852c; /* Example Fabric color */
+    background-color: #65646551; /* Example Fabric color */
 }
 
 .platform-badge[data-platform="forge"] {
@@ -307,6 +317,8 @@
  .icons {
   display: flex;
   justify-content: flex-end;
+  position: relative;
+  z-index: 200; /* Even higher z-index */
  }
 
  .download-button {

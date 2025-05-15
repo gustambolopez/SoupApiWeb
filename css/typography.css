@@ -1,0 +1,33 @@
+.hero-title {
+    font-size: 4em; /* Adjust as needed */
+    font-weight: bold;
+    line-height: 1.1; /* Adjust as needed */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, white, #a0aec0); /* Example gradient, adjust colors */
+    font-family: 'Montserrat', sans-serif; /* Apply the Montserrat font */
+}
+
+.hero-full-potential {
+    position: relative; /* For absolute positioning of the SVG */
+    background-image: linear-gradient(to right, #63b3ed, #3182ce); /* Example gradient for the word "full" */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-full-potential svg {
+    position: absolute;
+    bottom: -0.5em; /* Adjust position */
+    left: -0.2em; /* Adjust position */
+    width: 80%; /* Approximate width */
+    height: auto;
+    z-index: -1; /* Place behind the text */
+}
+
+.hero-full-potential svg path {
+    fill: none;
+    stroke: linear-gradient(to right, #805ff3, #5024b4); /* Gradient for the underline */
+    stroke-width: 4; /* Adjust thickness */
+}
